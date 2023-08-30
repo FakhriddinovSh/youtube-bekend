@@ -20,11 +20,10 @@ app.use('/', authRouter);
 app.use('/videos', videoRouter);
 
 app.use((error, req, res, next) => {
-	// if ([400, 401, 404, 413, 415].includes(error.status)) {
-	// 	return res.status(error.status).send(error);
-	// }
-	// return res.status(500).send(new ServerError(''));
-	return res.send(error.message);
+	if ([400, 401, 404, 413, 415].includes(error.status)) {
+		return res.status(error.status).send(error);
+	}
+	return res.status(500).send(new ServerError(''));
 });
 
 app.listen(PORT, () =>
