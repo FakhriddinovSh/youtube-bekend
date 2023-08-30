@@ -6,4 +6,9 @@ const tokenConfig = {
 	key: process.env.TOKEN_KEY,
 };
 
-module.exports = { PORT, tokenConfig };
+const PAGINATION = {
+	page: 1,
+	limit: 10,
+};
+
+module.exports = { PORT, tokenConfig, PAGINATION };

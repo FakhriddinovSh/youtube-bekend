@@ -3,11 +3,21 @@ const sha256 = require('sha256');
 const { sign } = require('../utils/jwt');
 const path = require('path');
 const fs = require('fs');
+const { ClientError } = require('../utils/error');
 
 const REGISTER = (req, res, next) => {
 	try {
 		const { error, value: user } = userValidation.validate(req.body);
 		if (error) return next(error);
+		const users = req.select('users');
+		const found = users.find((item) => item.username == user.username);
+		if (found) {
+			throw new Error('The user already exists');
+		}
+		if (!req.file) {
+			throw new Error('The file argument is required');
+		}
+
 		const { mimetype, size, buffer, originalname } = req.file;
 
 		if (size > 10485760) {
@@ -18,14 +28,18 @@ const REGISTER = (req, res, next) => {
 		}
 
 		const fileName = originalname.replace(/\s/g, '');
-		const filePath = path.join(process.cwd(), 'files', 'images' + fileName);
+		const filePath = path.join(
+			process.cwd(),
+			'files',
+			'images',
+			'images' + fileName,
+		);
 		fs.writeFileSync(filePath, buffer);
 
-		const users = req.select('users');
 		const new_user = {
 			userId: users.length ? users[users.length - 1].userId + 1 : 1,
 			username: user.username,
-			profileImg: '/images' + fileName,
+			profileImg: Date.now() + '/images' + fileName,
 			password: sha256(user.password),
 			userCreatedAt: Date(),
 		};
@@ -50,7 +64,7 @@ const LOGIN = (req, res, next) => {
 	try {
 		const { username, password } = req.body;
 		if (!username || !password) {
-			throw new Error('Username and password are required');
+			throw new ClientError(400, 'Username and password are required');
 		}
 		const users = req.select('users');
 		const user = users.find(
@@ -58,7 +72,7 @@ const LOGIN = (req, res, next) => {
 				item.username == username && item.password == sha256(password),
 		);
 
-		if (!user) throw new Error('wrong username or password');
+		if (!user) throw new ClientError(404, 'wrong username or password');
 
 		delete user.password;
 		return res.json({

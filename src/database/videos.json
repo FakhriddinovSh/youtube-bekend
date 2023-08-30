@@ -1,18 +1,2 @@
 [
-	{
-		"videoId": 1,
-		"userId": 1,
-		"videoTitle": "IQTest video",
-		"videoUrl": "video/video.mp4",
-		"videoSize": 25,
-		"videoCreatedAt": "Fri Jan 07 2022 15:57:30 GMT+0500 (Uzbekistan Standart Time)"
-	},
-	{
-		"videoId": 2,
-		"userId": 2,
-		"videoTitle": "Rabbit video",
-		"videoUrl": "video/video.mp4",
-		"videoSize": 25,
-		"videoCreatedAt": "Fri Jan 07 2022 15:57:30 GMT+0500 (Uzbekistan Standart Time)"
-	}
 ]
