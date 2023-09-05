@@ -30,7 +30,6 @@ const REGISTER = (req, res, next) => {
 		const fileName = originalname.replace(/\s/g, '');
 		const filePath = path.join(
 			process.cwd(),
-			'src',
 			'files',
 			'images',
 			'images' + fileName,
