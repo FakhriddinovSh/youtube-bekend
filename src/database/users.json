@@ -1,3 +1,16 @@
 [
-    
+    {
+        "userId": 2,
+        "username": "Ravshan",
+        "profileImg": "imageslogo1.png",
+        "password": "580f916ea2b7bbb6e8d95ef74c53add582e07a12f96b6739acb91962ad1855af",
+        "userCreatedAt": "Thu Aug 31 2023 22:26:01 GMT+0300 (Moscow Standard Time)"
+    },
+    {
+        "userId": 3,
+        "username": "Shahobiddin",
+        "profileImg": "imagesreact.jpg",
+        "password": "580f916ea2b7bbb6e8d95ef74c53add582e07a12f96b6739acb91962ad1855af",
+        "userCreatedAt": "Thu Aug 31 2023 22:37:41 GMT+0300 (Moscow Standard Time)"
+    }
 ]

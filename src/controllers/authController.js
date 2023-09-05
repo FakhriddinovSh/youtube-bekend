@@ -12,24 +12,25 @@ const REGISTER = (req, res, next) => {
 		const users = req.select('users');
 		const found = users.find((item) => item.username == user.username);
 		if (found) {
-			throw new Error('The user already exists');
+			throw new ClientError('The user already exists');
 		}
 		if (!req.file) {
-			throw new Error('The file argument is required');
+			throw new ClientError('The file argument is required');
 		}
 
 		const { mimetype, size, buffer, originalname } = req.file;
 
 		if (size > 10485760) {
-			throw new Error('File must not be larger than 10MB!');
+			throw new ClientError('File must not be larger than 10MB!');
 		}
 		if (!['image/jpg', 'image/jpeg', 'image/png'].includes(mimetype)) {
-			throw new Error('File must be JPG/PNG');
+			throw new ClientError('File must be JPG/PNG');
 		}
 
 		const fileName = originalname.replace(/\s/g, '');
 		const filePath = path.join(
 			process.cwd(),
+			'src',
 			'files',
 			'images',
 			'images' + fileName,
@@ -39,7 +40,7 @@ const REGISTER = (req, res, next) => {
 		const new_user = {
 			userId: users.length ? users[users.length - 1].userId + 1 : 1,
 			username: user.username,
-			profileImg: Date.now() + '/images' + fileName,
+			profileImg: 'images' + fileName,
 			password: sha256(user.password),
 			userCreatedAt: Date(),
 		};
