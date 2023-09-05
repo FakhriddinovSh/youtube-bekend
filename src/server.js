@@ -4,8 +4,10 @@ const { PORT } = require('../config');
 const modelMiddleware = require('./middleware/model');
 const paginationMiddleware = require('./middleware/pagination');
 const cors = require('cors');
+const path = require('path');
 
 app.use(cors());
+app.use(express.static(path.join(process.cwd('files'))));
 app.use(express.json());
 app.use(modelMiddleware);
 app.use(paginationMiddleware);
